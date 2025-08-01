@@ -105,3 +105,5 @@ app.post('/api/auth/login', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
+
+export default router;
