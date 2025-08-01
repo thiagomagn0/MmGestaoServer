@@ -1,8 +1,9 @@
 import express from 'express';
+const router = express.Router();
 import mongoose from 'mongoose';
 import Pedido from '../models/Pedido.js';
 
-const router = express.Router();
+
 const ObjectId = mongoose.Types.ObjectId;
 
 router.get('/', async (req, res) => {

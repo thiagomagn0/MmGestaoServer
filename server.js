@@ -1,8 +1,10 @@
 import express from 'express';
-const app = express();
-app.use('/uploads', express.static('uploads'));
 import cors from 'cors';
+import chalk from 'chalk';
+import dotenv from 'dotenv';
+
 import connectDB from './config/db.js';
+
 import authRoutes from './routes/auth.js';
 import clientesRoutes from './routes/clientes.js';
 import produtosRoutes from './routes/produtos.js';
@@ -10,24 +12,29 @@ import pedidosRoutes from './routes/pedidos.js';
 import regioesRoutes from './routes/regioes.js';
 import relatoriosRoutes from './routes/relatorios.js';
 import graficosRoutes from './routes/graficos.js';
+
 import authMiddleware from './middleware/authMiddleware.js';
-import dotenv from 'dotenv';
+
 dotenv.config();
 
-
-
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-
+// Conexão com o banco
 connectDB();
+
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://mm-gestao-front.vercel.app', 'http://mmgestao.up.railway.app'], // adicione todas as origens válidas aqui
+  origin: [
+    'http://localhost:5173',
+    'https://mm-gestao-front.vercel.app',
+    'https://mmgestao.up.railway.app',
+  ],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // Rotas abertas
 app.use('/api/auth', authRoutes);
@@ -42,7 +49,48 @@ app.use('/api/graficos', authMiddleware, graficosRoutes);
 
 app.get('/', (req, res) => res.send('API rodando'));
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+// Função para listar rotas completas com prefixo
+function logRotasComPrefixo(rotas) {
+  const todasRotas = [];
 
+  function extrairRotas(stack, basePath) {
+    stack.forEach((layer) => {
+      if (layer.route) {
+        const methods = Object.keys(layer.route.methods)
+          .map((m) => chalk.greenBright(m.toUpperCase()))
+          .join(', ');
+        todasRotas.push(`${chalk.bold('→')} ${methods} ${chalk.blue(basePath + layer.route.path)}`);
+      } else if (layer.name === 'router' && layer.handle?.stack) {
+        extrairRotas(layer.handle.stack, basePath);
+      }
+    });
+  }
+
+  rotas.forEach(({ prefixo, router }) => {
+    extrairRotas(router.stack, prefixo);
+  });
+
+  if (todasRotas.length > 0) {
+    console.log(chalk.cyan('\n📍 Rotas completas registradas:\n'));
+    todasRotas.forEach((r) => console.log(r));
+    console.log();
+  } else {
+    console.log(chalk.red('❌ Nenhuma rota encontrada.'));
+  }
+}
+
+const rotasRegistradas = [
+  { prefixo: '/api/auth', router: authRoutes },
+  { prefixo: '/api/clientes', router: clientesRoutes },
+  { prefixo: '/api/produtos', router: produtosRoutes },
+  { prefixo: '/api/pedidos', router: pedidosRoutes },
+  { prefixo: '/api/regioes', router: regioesRoutes },
+  { prefixo: '/api/relatorios', router: relatoriosRoutes },
+  { prefixo: '/api/graficos', router: graficosRoutes },
+];
+
+logRotasComPrefixo(rotasRegistradas);
+
+app.listen(PORT, () => {
+  console.log(chalk.green(`🚀 Servidor rodando na porta ${PORT}`));
+});

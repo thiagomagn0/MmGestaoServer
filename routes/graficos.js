@@ -1,10 +1,11 @@
 import express from 'express';
+const router = express.Router();
 import Pedido from '../models/Pedido.js';
 import Produto from '../models/Produto.js';
 import Cliente from '../models/Cliente.js';
 import mongoose from 'mongoose';
 
-const router = express.Router();
+
 
 router.get('/donut', async (req, res) => {
   try {
