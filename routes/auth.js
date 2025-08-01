@@ -5,6 +5,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 
+router.use((req, res, next) => {
+  console.log('🚨 Requisição chegou em /api/auth!');
+  next();
+});
 
 router.post('/login', async (req, res) => {
    console.log('Body recebido:', req.body);
