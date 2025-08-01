@@ -22,11 +22,25 @@ const PORT = process.env.PORT || 5000;
 
 // Conexão com o banco
 connectDB();
-
-app.use(cors({
+// CORS configurado para aceitar as origens certas
+const corsOptions = {
   origin: ['http://localhost:5173', 'https://mm-gestao-front.vercel.app'],
   credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
