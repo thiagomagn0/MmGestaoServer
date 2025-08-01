@@ -23,15 +23,10 @@ const PORT = process.env.PORT || 5000;
 // Conexão com o banco
 connectDB();
 
-const corsOptions = {
-  origin: [
-     'http://localhost:5173',
-    'https://mm-gestao-front.vercel.app'
-  ],
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://mm-gestao-front.vercel.app'],
   credentials: true,
-};
-
-app.use(cors(corsOptions));
+}));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
