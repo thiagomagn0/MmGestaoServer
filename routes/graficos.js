@@ -123,7 +123,7 @@ router.get('/top-produtos', async (req, res) => {
   }
 });
 
-// server/routes/relatorios.js
+
 router.get('/top-clientes', async (req, res) => {
   try {
     const topClientes = await Pedido.aggregate([
