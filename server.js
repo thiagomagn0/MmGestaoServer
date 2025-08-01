@@ -22,12 +22,7 @@ const PORT = process.env.PORT || 5000;
 
 
 // 🔌 Conexão com MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB conectado'))
-  .catch((err) => {
-    console.error('❌ Erro ao conectar MongoDB:', err.message);
-    process.exit(1);
-  });
+connectDB();
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://mm-gestao-front.vercel.app'); // ou '*'
