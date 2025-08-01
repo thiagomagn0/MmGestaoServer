@@ -105,6 +105,11 @@ const rotasRegistradas = [
 
 logRotasComPrefixo(rotasRegistradas);
 
+process.on('uncaughtException', (err) => {
+  console.error('Erro não capturado:', err);
+});
+
 app.listen(PORT, () => {
   console.log(chalk.green(`🚀 Servidor rodando na porta ${PORT}`));
 });
+
