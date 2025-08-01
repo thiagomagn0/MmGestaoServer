@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://mmgestao.vercel.app','https://mmgestao.up.railway.app'], // adicione todas as origens válidas aqui
+  origin: ['http://localhost:5173', 'https://mm-gestao-front.vercel.app', 'https://mmgestao.up.railway.app'], // adicione todas as origens válidas aqui
   credentials: true,
 };
 
