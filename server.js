@@ -25,9 +25,8 @@ connectDB();
 
 const corsOptions = {
   origin: [
-    'http://localhost:5173',
-    'https://mm-gestao-front.vercel.app',
-    'https://mmgestao.up.railway.app',
+     'http://localhost:5173',
+    'https://mm-gestao-front.vercel.app'
   ],
   credentials: true,
 };
