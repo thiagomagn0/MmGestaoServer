@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 
 
 router.post('/login', async (req, res) => {
+   console.log('Body recebido:', req.body);
   try {
     const { email, senha } = req.body;
 
