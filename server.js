@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
 
-  console.log('💡 Preflight?', req.method, req.path); // loga método e rota
+  console.log(`🌐 ${req.method} ${req.path} | Origin: ${req.headers.origin}`);
 
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
