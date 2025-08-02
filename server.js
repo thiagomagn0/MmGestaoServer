@@ -18,7 +18,7 @@ import authMiddleware from './middleware/authMiddleware.js';
 console.log('✅ Iniciando servidor...');
 console.log('PORT:', process.env.PORT);
 console.log('MONGO_URI existe:', !!process.env.MONGO_URI);
-console.log('JWT_SECRET existe:', !!process.env.JWT_SECRET);git 
+console.log('JWT_SECRET existe:', !!process.env.JWT_SECRET); 
 
 dotenv.config();
 
