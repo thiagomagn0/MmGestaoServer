@@ -28,20 +28,7 @@ const PORT = process.env.PORT;
 // 🔌 Conexão com MongoDB
 connectDB();
 
-app.use((req, res, next) => {
- const origin = req.headers.origin || '*';
-  res.header('Access-Control-Allow-Origin', origin);
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-  console.log(`🌐 ${req.method} ${req.path} | Origin: ${req.headers.origin}`);
-
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
-});
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], credentials: true }));
 
 app.use(express.json());
 
@@ -70,6 +57,7 @@ setInterval(() => {
   console.log('⏱️ Mantendo o app ativo...');
 }, 10000); // a cada 10 segundos
 
-app.post('/api/teste', (req, res) => {
-  res.json({ msg: 'Rota POST funcionando!', body: req.body });
+app.post('/teste-directo', (req, res) => {
+  console.log('🚨 Chegou no teste-directo!');
+  res.json({ ok: true, method: req.method, body: req.body });
 });
