@@ -73,3 +73,6 @@ app.listen(PORT, () => {
   console.log(chalk.green(`🚀 Servidor rodando na porta ${PORT}`));
 });
 
+setInterval(() => {
+  console.log('⏱️ Mantendo o app ativo...');
+}, 10000); // a cada 10 segundos
