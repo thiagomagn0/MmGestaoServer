@@ -22,7 +22,7 @@ console.log('JWT_SECRET existe:', !!process.env.JWT_SECRET);
 
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 
 // 🔌 Conexão com MongoDB
