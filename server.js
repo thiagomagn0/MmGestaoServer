@@ -2,9 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-
+dotenv.config();
 import connectDB from './config/db.js';
-
 import authRoutes from './routes/auth.js';
 import clientesRoutes from './routes/clientes.js';
 import produtosRoutes from './routes/produtos.js';
@@ -20,7 +19,7 @@ console.log('PORT:', process.env.PORT);
 console.log('MONGO_URI existe:', !!process.env.MONGO_URI);
 console.log('JWT_SECRET existe:', !!process.env.JWT_SECRET); 
 
-dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -70,3 +69,7 @@ app.listen(PORT, () => {
 setInterval(() => {
   console.log('⏱️ Mantendo o app ativo...');
 }, 10000); // a cada 10 segundos
+
+app.post('/api/teste', (req, res) => {
+  res.json({ msg: 'Rota POST funcionando!', body: req.body });
+});
