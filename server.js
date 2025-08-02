@@ -14,6 +14,7 @@ import graficosRoutes from './routes/graficos.js';
 
 import authMiddleware from './middleware/authMiddleware.js';
 
+console.log('🧪 VARIÁVEIS DE AMBIENTE:', process.env);
 console.log('✅ Iniciando servidor...');
 console.log('PORT:', process.env.PORT);
 console.log('MONGO_URI existe:', !!process.env.MONGO_URI);
@@ -22,7 +23,7 @@ console.log('JWT_SECRET existe:', !!process.env.JWT_SECRET);
 
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ?? 5000;
 
 
 // 🔌 Conexão com MongoDB
@@ -48,6 +49,7 @@ app.use('/api/graficos', authMiddleware, graficosRoutes);
 
 app.get('/', (req, res) => res.send('API rodando'));
 
+console.log('Iniciando na porta:', PORT)
 
 app.listen(PORT, () => {
   console.log(chalk.green(`🚀 Servidor rodando na porta ${PORT}`));
